@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPT - GitHub Models</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">
+        <h1>GPT - GitHub Models</h1>
+        <select id="model-select">
+          <option value="gpt-4o">OpenAI GPT-4o</option>
+          <option value="gpt-4o-mini">OpenAI GPT-4o Mini</option>
+        </select>
+      </div>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input">
+        <textarea
+          id="user-input"
+          placeholder="Type your message here..."
+        ></textarea>
+        <button id="send-button">Send</button>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
