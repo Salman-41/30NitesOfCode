@@ -40,7 +40,7 @@ To access the GPT models, you'll need a GitHub token with the necessary scopes:
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/gpt-github-models.git
+git clone https://github.com/Salman-41/30NitesOfCode/tree/main/GPT%20-%20Github%20Models
 cd GPT\ -\ Github\ Models/
 ```
 
