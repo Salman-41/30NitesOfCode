@@ -11,18 +11,22 @@ let wrongLetters = [];
 let remainingChances = 10;
 let gameStatus = "playing";
 
-function startGame() {
-  fetch("/start_game", { method: "POST" })
-    .then((response) => response.json())
-    .then((data) => {
-      word = data.word;
-      guessedWord = data.masked_word;
-      wrongLetters = [];
-      remainingChances = data.remaining_chances;
-      gameStatus = data.game_status;
-      updateDisplay();
-      createLetterButtons();
-    });
+async function startGame() {
+  try {
+    const response = await fetch("/start_game", { method: "POST" });
+    const data = await response.json();
+
+    word = data.word;
+    guessedWord = data.masked_word;
+    wrongLetters = [];
+    remainingChances = data.remaining_chances;
+    gameStatus = data.game_status;
+
+    updateDisplay();
+    createLetterButtons();
+  } catch (error) {
+    console.error("Error starting game:", error);
+  }
 }
 
 function updateDisplay() {
@@ -56,29 +60,33 @@ function createLetterButtons() {
   }
 }
 
-function guessLetter(letter) {
-  fetch("/guess", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      word: word,
-      guessed_word: guessedWord,
-      guessed_letter: letter,
-      wrong_letters: wrongLetters,
-      remaining_chances: remainingChances,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      guessedWord = data.guessed_word;
-      wrongLetters = data.wrong_letters;
-      remainingChances = data.remaining_chances;
-      gameStatus = data.game_status;
-      updateDisplay();
-      disableButton(letter.toUpperCase());
+async function guessLetter(letter) {
+  try {
+    const response = await fetch("/guess", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        word: word,
+        guessed_word: guessedWord,
+        guessed_letter: letter,
+        wrong_letters: wrongLetters,
+        remaining_chances: remainingChances,
+      }),
     });
+
+    const data = await response.json();
+    guessedWord = data.guessed_word;
+    wrongLetters = data.wrong_letters;
+    remainingChances = data.remaining_chances;
+    gameStatus = data.game_status;
+
+    updateDisplay();
+    disableButton(letter.toUpperCase());
+  } catch (error) {
+    console.error("Error guessing letter:", error);
+  }
 }
 
 function disableButton(letter) {
